@@ -1,0 +1,177 @@
+{
+  "command": "python benchmarks/run_benchmarks.py --suite pii",
+  "corpus": {
+    "sentences": 600,
+    "seed": 7,
+    "italian_share": 0.428,
+    "gold_spans": 909,
+    "hard_negatives": 498,
+    "out_of_scope_variants": 48,
+    "note": "synthetic values from agent_proxy.synth (seeded); not real people"
+  },
+  "matching": "same class and intersection-over-union >= 0.5",
+  "results": {
+    "regex + validators": {
+      "overall": {
+        "tp": 752,
+        "fp": 0,
+        "fn": 48,
+        "precision": 1.0,
+        "recall": 0.94,
+        "f1": 0.9691
+      },
+      "exact_boundary_rate": 1.0,
+      "per_type": {
+        "CARD": {
+          "tp": 83,
+          "fp": 0,
+          "fn": 5,
+          "precision": 1.0,
+          "recall": 0.9432,
+          "f1": 0.9708
+        },
+        "CODICE_FISCALE": {
+          "tp": 82,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "DOB": {
+          "tp": 100,
+          "fp": 0,
+          "fn": 8,
+          "precision": 1.0,
+          "recall": 0.9259,
+          "f1": 0.9615
+        },
+        "EMAIL": {
+          "tp": 122,
+          "fp": 0,
+          "fn": 16,
+          "precision": 1.0,
+          "recall": 0.8841,
+          "f1": 0.9385
+        },
+        "IBAN": {
+          "tp": 68,
+          "fp": 0,
+          "fn": 6,
+          "precision": 1.0,
+          "recall": 0.9189,
+          "f1": 0.9577
+        },
+        "IP": {
+          "tp": 96,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "PHONE": {
+          "tp": 151,
+          "fp": 0,
+          "fn": 13,
+          "precision": 1.0,
+          "recall": 0.9207,
+          "f1": 0.9587
+        },
+        "SECRET": {
+          "tp": 50,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      }
+    },
+    "regex + validators + spaCy names": {
+      "overall": {
+        "tp": 837,
+        "fp": 94,
+        "fn": 72,
+        "precision": 0.899,
+        "recall": 0.9208,
+        "f1": 0.9098
+      },
+      "exact_boundary_rate": 0.9928,
+      "per_type": {
+        "CARD": {
+          "tp": 83,
+          "fp": 0,
+          "fn": 5,
+          "precision": 1.0,
+          "recall": 0.9432,
+          "f1": 0.9708
+        },
+        "CODICE_FISCALE": {
+          "tp": 82,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "DOB": {
+          "tp": 100,
+          "fp": 0,
+          "fn": 8,
+          "precision": 1.0,
+          "recall": 0.9259,
+          "f1": 0.9615
+        },
+        "EMAIL": {
+          "tp": 122,
+          "fp": 0,
+          "fn": 16,
+          "precision": 1.0,
+          "recall": 0.8841,
+          "f1": 0.9385
+        },
+        "IBAN": {
+          "tp": 68,
+          "fp": 0,
+          "fn": 6,
+          "precision": 1.0,
+          "recall": 0.9189,
+          "f1": 0.9577
+        },
+        "IP": {
+          "tp": 96,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "PERSON": {
+          "tp": 85,
+          "fp": 94,
+          "fn": 24,
+          "precision": 0.4749,
+          "recall": 0.7798,
+          "f1": 0.5903
+        },
+        "PHONE": {
+          "tp": 151,
+          "fp": 0,
+          "fn": 13,
+          "precision": 1.0,
+          "recall": 0.9207,
+          "f1": 0.9587
+        },
+        "SECRET": {
+          "tp": 50,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      }
+    }
+  }
+}

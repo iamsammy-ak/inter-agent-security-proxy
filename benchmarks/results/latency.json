@@ -1,0 +1,81 @@
+{
+  "command": "python benchmarks/run_benchmarks.py --suite latency",
+  "machine": "Windows AMD64, Python 3.13.2",
+  "method": "best of 3 runs per message, then percentiles across messages",
+  "groups": {
+    "short messages": {
+      "messages": 376,
+      "median_chars": 100,
+      "max_chars": 632,
+      "stages": {
+        "pii masking": {
+          "p50_ms": 0.354,
+          "p95_ms": 0.837,
+          "mean_ms": 0.386
+        },
+        "rules + hidden-text + decoding": {
+          "p50_ms": 0.629,
+          "p95_ms": 1.966,
+          "mean_ms": 0.826
+        },
+        "classifier (bge-small)": {
+          "p50_ms": 32.433,
+          "p95_ms": 88.13,
+          "mean_ms": 38.732
+        },
+        "classifier (hashing)": {
+          "p50_ms": 2.092,
+          "p95_ms": 6.354,
+          "mean_ms": 2.72
+        },
+        "full screen with bge-small (detect + mask + spotlight)": {
+          "p50_ms": 34.404,
+          "p95_ms": 111.418,
+          "mean_ms": 44.387
+        },
+        "full screen with hashing (detect + mask + spotlight)": {
+          "p50_ms": 3.688,
+          "p95_ms": 10.542,
+          "mean_ms": 4.473
+        }
+      }
+    },
+    "long tool results": {
+      "messages": 24,
+      "median_chars": 5030,
+      "max_chars": 6063,
+      "stages": {
+        "pii masking": {
+          "p50_ms": 19.662,
+          "p95_ms": 23.46,
+          "mean_ms": 19.397
+        },
+        "rules + hidden-text + decoding": {
+          "p50_ms": 37.635,
+          "p95_ms": 57.873,
+          "mean_ms": 37.255
+        },
+        "classifier (bge-small)": {
+          "p50_ms": 3315.628,
+          "p95_ms": 4808.844,
+          "mean_ms": 3284.075
+        },
+        "classifier (hashing)": {
+          "p50_ms": 370.497,
+          "p95_ms": 699.314,
+          "mean_ms": 401.102
+        },
+        "full screen with bge-small (detect + mask + spotlight)": {
+          "p50_ms": 5624.247,
+          "p95_ms": 7800.811,
+          "mean_ms": 5216.261
+        },
+        "full screen with hashing (detect + mask + spotlight)": {
+          "p50_ms": 184.244,
+          "p95_ms": 270.468,
+          "mean_ms": 193.5
+        }
+      }
+    }
+  }
+}

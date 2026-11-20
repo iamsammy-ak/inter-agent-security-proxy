@@ -1,0 +1,55 @@
+# Demo policy: three agents in a customer-support workflow.
+# key_sha256 values are SHA-256 hashes of the public demo keys "research-demo-key", "billing-demo-key" and
+# "supervisor-demo-key". Replace them (or remove key_sha256 to trust the X-Agent-Id header) before real use.
+version: 1
+
+# Hosts that may appear as live links or images inside content passed between agents.
+link_allowlist:
+  - example-corp.com
+  - "*.example-corp.com"
+
+agents:
+  research-agent:
+    description: Looks up customers and documents and hands findings to billing-agent.
+    key_sha256: 3bcdb5c415c6c5dcfb055c940e05c427c5a6d61acc12bc1cc9efff052c3a1eeb
+    scopes: []
+    data_classes: []
+    tools:
+      - name: crm_lookup
+      - name: web_search
+    destinations: ["*.example-corp.com"]
+    can_send_to: [billing-agent]
+    on_injection: sanitize
+
+  billing-agent:
+    description: Issues small refunds and sends billing e-mails to customers.
+    key_sha256: ef1f6e3ee024f93d3d5297cf2de04c77bee5c057f01a2c3d09c11673d70cf74b
+    scopes: ["pii:reveal"]
+    data_classes: [IBAN, EMAIL]
+    tools:
+      - name: lookup_invoice
+        args:
+          invoice_id: {pattern: "INV-\\d{4,8}"}
+      - name: issue_refund
+        max_calls_per_session: 1
+        args:
+          amount: {min: 0.01, max: 200}
+          currency: {enum: [EUR]}
+      - name: send_email
+        args:
+          to: {destination: true}
+          body: {max_length: 2000}
+    destinations: ["example-corp.com", "*.example-corp.com", "example.com"]
+    can_send_to: [supervisor]
+    on_injection: sanitize
+    limits:
+      max_tool_calls_per_response: 3
+      max_message_chars: 20000
+
+  supervisor:
+    description: Human-facing review console; may read the audit log and see customer data in clear.
+    key_sha256: 92661e5f9a1467eb7ca5351b72814a9565306e6ac32cbf5538e13a080745990a
+    scopes: ["pii:reveal", "audit:read"]
+    data_classes: [EMAIL, PHONE, IBAN, CODICE_FISCALE, DOB]
+    can_send_to: [billing-agent]
+    on_injection: quarantine
